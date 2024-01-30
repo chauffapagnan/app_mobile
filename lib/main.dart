@@ -1,3 +1,7 @@
+import 'package:chauffagecanette/components/EnergieProduite.dart';
+import 'package:chauffagecanette/components/EtatChauffage.dart';
+import 'package:chauffagecanette/components/RoutineAllumage.dart';
+import 'package:chauffagecanette/components/RoutineOuverture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -48,8 +52,36 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       backgroundColor: Colors.blue,
       body: Center(
-
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 20.h),
+              padding: EdgeInsets.only(left: 25.w, right: 25.w),
+              child: Column(
+                children: [
+                  HomePageText("CHAUFFAGE SALON"),
+                  SizedBox(height: 5.h,),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
+}
+
+Widget HomePageText(String text,) {
+  return Container(
+    margin: EdgeInsets.only(top: 50.h),
+    child: Text(
+      text,
+      style: TextStyle(
+          color: Colors.white,
+          fontSize: 24.sp,
+          fontWeight: FontWeight.bold
+      ),
+    ),
+  );
 }

@@ -1,5 +1,5 @@
 import 'package:chauffagecanette/components/EnergieProduite.dart';
-import 'package:chauffagecanette/components/EtatChauffage.dart';
+import 'package:chauffagecanette/components/etat_chauffage/EtatChauffage.dart';
 import 'package:chauffagecanette/components/RoutineAllumage.dart';
 import 'package:chauffagecanette/components/RoutineOuverture.dart';
 import 'package:flutter/material.dart';

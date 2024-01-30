@@ -61,7 +61,10 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Column(
                 children: [
                   HomePageText("CHAUFFAGE SALON"),
-                  SizedBox(height: 5.h,),
+                  SizedBox(height: 5.h),
+
+                  EtatChauffage(),
+
                 ],
               ),
             )
@@ -74,12 +77,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
 Widget HomePageText(String text,) {
   return Container(
-    margin: EdgeInsets.only(top: 50.h),
+    margin: EdgeInsets.only(top: 30.h),
     child: Text(
       text,
       style: TextStyle(
           color: Colors.white,
-          fontSize: 24.sp,
+          fontSize: 30.sp,
           fontWeight: FontWeight.bold
       ),
     ),

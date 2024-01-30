@@ -4,7 +4,9 @@ import 'package:chauffagecanette/components/RoutineAllumage.dart';
 import 'package:chauffagecanette/components/RoutineOuverture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fl_chart/fl_chart.dart';
 
+import 'components/Graph.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -62,9 +64,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   HomePageText("CHAUFFAGE SALON"),
                   SizedBox(height: 5.h),
-
                   EtatChauffage(),
-
+                  SizedBox(height: 5.h),
+                  EnergieProduite(),
+                  SizedBox(height: 5.h),
+                  BarChartSample3()
                 ],
               ),
             )

@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -12,7 +13,7 @@ class EtatChauffage extends StatefulWidget {
 }
 
 class _EtatChauffageState extends State<EtatChauffage> {
-  bool etat_btn = true;
+  bool etat_btn = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,6 +51,9 @@ class _EtatChauffageState extends State<EtatChauffage> {
                       // This is called when the user toggles the switch.
                       setState(() {
                         etat_btn = !etat_btn;
+                        if (kDebugMode) {
+                          print("ETAT : ${etat_btn}");
+                        }
                       });
                     },
                   ),

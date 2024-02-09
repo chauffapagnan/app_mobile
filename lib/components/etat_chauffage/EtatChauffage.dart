@@ -1,9 +1,11 @@
 import 'dart:ffi';
 
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:http/http.dart' as http;
 
 class EtatChauffage extends StatefulWidget {
   const EtatChauffage({super.key});
@@ -53,6 +55,7 @@ class _EtatChauffageState extends State<EtatChauffage> {
                         etat_btn = !etat_btn;
                         if (kDebugMode) {
                           print("ETAT : ${etat_btn}");
+                          print(createAlbum("${etat_btn}").toString());
                         }
                       });
                     },
@@ -95,6 +98,17 @@ class _EtatChauffageState extends State<EtatChauffage> {
           ],
         )
       ),
+    );
+  }
+  Future<http.Response> createAlbum(String state) {
+    return http.post(
+      Uri.parse('https://jsonplaceholder.typicode.com/albums'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'state': state,
+      }),
     );
   }
 }
@@ -150,3 +164,5 @@ class _ToggleButtons2State extends State<ToggleButtons2> {
     },
   );
 }
+
+

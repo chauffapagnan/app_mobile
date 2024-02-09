@@ -102,12 +102,11 @@ class _EtatChauffageState extends State<EtatChauffage> {
   }
   Future<http.Response> createAlbum(String state) {
     return http.post(
-      Uri.parse('https://jsonplaceholder.typicode.com/albums'),
+      Uri.parse('https://local/albums/$state'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        'state': state,
       }),
     );
   }

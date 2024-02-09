@@ -1,12 +1,12 @@
-import 'package:chauffagecanette/components/EnergieProduite.dart';
+import 'package:chauffagecanette/components/energie_produite/EnergieProduite.dart';
 import 'package:chauffagecanette/components/etat_chauffage/EtatChauffage.dart';
-import 'package:chauffagecanette/components/RoutineAllumage.dart';
+import 'package:chauffagecanette/components/routine_allumage/RoutineAllumage.dart';
 import 'package:chauffagecanette/components/RoutineOuverture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fl_chart/fl_chart.dart';
 
-import 'components/Graph.dart';
+import 'components/energie_produite/Graph.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -51,6 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    BarChartSample3.setDatasSem([16.0,11.0,5.0,14.0,12.0,15.0,14.0]);
     return Scaffold(
       backgroundColor: Colors.blue,
       body: Center(
@@ -66,9 +67,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   SizedBox(height: 5.h),
                   EtatChauffage(),
                   SizedBox(height: 5.h),
-                  EnergieProduite(),
+                  //RoutineAllumage(),
                   SizedBox(height: 5.h),
-                  BarChartSample3()
+                  EnergieProduite(),
+
                 ],
               ),
             )

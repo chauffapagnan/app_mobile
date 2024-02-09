@@ -1,6 +1,5 @@
 import 'package:chauffagecanette/components/energie_produite/EnergieProduite.dart';
 import 'package:chauffagecanette/components/etat_chauffage/EtatChauffage.dart';
-import 'package:chauffagecanette/components/routine_allumage/RoutineAllumage.dart';
 import 'package:chauffagecanette/components/RoutineOuverture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -54,7 +53,24 @@ class _MyHomePageState extends State<MyHomePage> {
     BarChartSample3.setDatasSem([16.0,11.0,5.0,14.0,12.0,15.0,14.0]);
     return Scaffold(
       backgroundColor: Colors.blue,
-      body: Center(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            title: Center( child: HomePageText("CHAUFFAGE CANETTE"),),
+            expandedHeight: 40.0,
+            stretch: false,
+            backgroundColor: Colors.blue,
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate([
+              SizedBox(height: 5.h),
+              PaddingListCard(EtatChauffage()),
+              PaddingListCard(EnergieProduite()),
+              PaddingListCard(BarChartSample3())
+            ]),)
+        ],
+      )
+      /*Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -76,14 +92,13 @@ class _MyHomePageState extends State<MyHomePage> {
             )
           ],
         ),
-      ),
+      ),*/
     );
   }
 }
 
 Widget HomePageText(String text,) {
   return Container(
-    margin: EdgeInsets.only(top: 30.h),
     child: Text(
       text,
       style: TextStyle(
@@ -92,5 +107,13 @@ Widget HomePageText(String text,) {
           fontWeight: FontWeight.bold
       ),
     ),
+  );
+}
+
+Widget PaddingListCard(Widget my_widget) {
+  return Container(
+    margin: EdgeInsets.only(left: 8, right: 8, top: 20),
+    child: my_widget,
+
   );
 }

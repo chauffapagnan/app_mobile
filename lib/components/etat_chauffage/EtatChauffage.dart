@@ -12,6 +12,7 @@ class EtatChauffage extends StatefulWidget {
 }
 
 class _EtatChauffageState extends State<EtatChauffage> {
+  bool etat_btn = true;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,35 +30,66 @@ class _EtatChauffageState extends State<EtatChauffage> {
       ),
       child: SizedBox(
         width: double.infinity,
-        height: 90,
-        child: Column(
+        height: 110,
+        child: Stack(
           children: [
-            const Center(
-              child: Text(
-                  "Etat du chauffage",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold
-                  )
+            Positioned(
+              top: 12.h,
+              left: 270,
+              child: SizedBox(
+                width: 150,
+                height: 10,
+                child: Center(
+                  child: Switch(
+                    // This bool value toggles the switch.
+                    value: etat_btn,
+                    activeColor: Colors.blue,
+                    inactiveTrackColor: Colors.grey.shade400,
+                    inactiveThumbColor: Colors.white,
+                    onChanged: (bool value) {
+                      // This is called when the user toggles the switch.
+                      setState(() {
+                        etat_btn = !etat_btn;
+                      });
+                    },
+                  ),
+                )
               ),
             ),
-            Center(
-              child: Row(
-                  children: [
-                    const Text("température définie :",
-                        style: TextStyle(
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Center(
+                  child: Text(
+                      "Etat du chauffage",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold
+                      )
+                  ),
+                ),
+                FractionallySizedBox(
+                  widthFactor: 0.8,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      const Text("Température définie :",
+                          style: TextStyle(
                             color: Colors.black,
-                        )
-                    ),
-                    SizedBox(height: 5.w),
-                    ToggleButtons2(),
+                          )
+                      ),
+                      SizedBox(height: 5.w),
+                      ToggleButtons2(),
 
 
-                  ],
-              ),
-            )
+                    ],
+                  ),
+                )
+              ],
+            ),
           ],
-        ),
+        )
       ),
     );
   }

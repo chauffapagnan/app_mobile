@@ -53,6 +53,7 @@ class _EtatChauffageState extends State<EtatChauffage> {
                       // This is called when the user toggles the switch.
                       setState(() {
                         etat_btn = !etat_btn;
+                        createAlbum("${etat_btn}").toString();
                         if (kDebugMode) {
                           print("ETAT : ${etat_btn}");
                           print(createAlbum("${etat_btn}").toString());
@@ -102,7 +103,7 @@ class _EtatChauffageState extends State<EtatChauffage> {
   }
   Future<http.Response> createAlbum(String state) {
     return http.post(
-      Uri.parse('https://local/albums/$state'),
+      Uri.parse('https://controleur-api.vercel.app/etat_chauffage/$state'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

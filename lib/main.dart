@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   SizedBox(height: 5.h),
                   EtatChauffage(),
                   SizedBox(height: 5.h),
-                  //RoutineAllumage(),
+                  RoutineAllumage(),
                   SizedBox(height: 5.h),
                   EnergieProduite(),
 

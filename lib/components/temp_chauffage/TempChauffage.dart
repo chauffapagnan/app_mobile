@@ -55,7 +55,11 @@ class _TempChauffageState extends State<TempChauffage> {
                 ),
                 ToggleButtons2(),
                 ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (kDebugMode) {
+                        print("APPUI sur OK");
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
                       shape: RoundedRectangleBorder(
@@ -128,9 +132,6 @@ class _ToggleButtons2State extends State<ToggleButtons2> {
               if (index == 2) {
                 if (widget._counter < 100)
                   widget._counter++;
-              }
-              if (kDebugMode) {
-                print("OK OK OK");
               }
             } else {
               isSelected[index] = false;

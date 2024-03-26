@@ -21,7 +21,7 @@ class _EnergieProduiteState extends State<EnergieProduite> {
       ),
       child: const SizedBox(
         width: double.infinity,
-        height: 250,
+        height: 270,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

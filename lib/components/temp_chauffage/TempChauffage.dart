@@ -32,7 +32,7 @@ class _TempChauffageState extends State<TempChauffage> {
       ),
       child: SizedBox(
         width: double.infinity,
-        height: 100,
+        height: 110,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,9 +44,9 @@ class _TempChauffageState extends State<TempChauffage> {
                     fontWeight: FontWeight.w700
                 )
             ),const SizedBox(height: 10,),
-           Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+           Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 5,
               children: [
                 const Text("Température :",
                     style: TextStyle(

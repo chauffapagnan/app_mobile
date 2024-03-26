@@ -1,6 +1,7 @@
 import 'package:chauffagecanette/components/energie_produite/EnergieProduite.dart';
 import 'package:chauffagecanette/components/etat_chauffage/EtatChauffage.dart';
 import 'package:chauffagecanette/components/RoutineOuverture.dart';
+import 'package:chauffagecanette/components/temp_chauffage/TempChauffage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -65,8 +66,9 @@ class _MyHomePageState extends State<MyHomePage> {
             delegate: SliverChildListDelegate([
               SizedBox(height: 5.h),
               PaddingListCard(EtatChauffage()),
+              PaddingListCard(TempChauffage()),
               PaddingListCard(EnergieProduite()),
-              PaddingListCard(BarChartSample3())
+              //PaddingListCard(BarChartSample3())
             ]),)
         ],
       )

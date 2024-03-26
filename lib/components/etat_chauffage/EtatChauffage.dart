@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -33,72 +31,40 @@ class _EtatChauffageState extends State<EtatChauffage> {
       ),
       child: SizedBox(
         width: double.infinity,
-        height: 130,
-        child: Stack(
+        height: 70,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Positioned(
-              top: -40.h,
-              left: 170,
-              child: SizedBox(
-                width: 300,
-                height: 150,
-                child: Center(
-                    child:Transform.scale(
-                      scaleX: 1.3,
-                      scaleY:1.3,
-                  child: Switch(
-                    // This bool value toggles the switch.
-                    value: etat_btn,
-                    activeColor: Colors.blue,
-                    inactiveTrackColor: Colors.grey.shade400,
-                    inactiveThumbColor: Colors.white,
-                    onChanged: (bool value) {
-                      // This is called when the user toggles the switch.
-                      setState(() {
-                        etat_btn = !etat_btn;
-                        createAlbum("${etat_btn}").toString();
-                        if (kDebugMode) {
-                          print("ETAT : ${etat_btn}");
-                        }
-                      });
-                    },
-                  ),
+            const Center(
+              child: Text(
+                  "Etat du chauffage",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold
                   )
-                )
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Center(
-                  child: Text(
-                      "Etat du chauffage",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold
-                      )
-                  ),
-                ),
-                FractionallySizedBox(
-                  widthFactor: 0.8,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Text("Température définie :",
-                          style: TextStyle(
-                            color: Colors.black,
-                          )
-                      ),
-                      SizedBox(height: 5.w),
-                      ToggleButtons2(),
-
-
-                    ],
-                  ),
-                )
-              ],
-            ),
+            Transform.scale(
+              scaleX: 1.3,
+              scaleY:1.3,
+              child: Switch(
+                // This bool value toggles the switch.
+                value: etat_btn,
+                activeColor: Colors.blue,
+                inactiveTrackColor: Colors.grey.shade400,
+                inactiveThumbColor: Colors.white,
+                onChanged: (bool value) {
+                  // This is called when the user toggles the switch.
+                  setState(() {
+                    etat_btn = !etat_btn;
+                    createAlbum("${etat_btn}").toString();
+                    if (kDebugMode) {
+                      print("ETAT : ${etat_btn}");
+                    }
+                  });
+                },
+              ),
+            )
           ],
         )
       ),
@@ -114,58 +80,6 @@ class _EtatChauffageState extends State<EtatChauffage> {
       }),
     );
   }
-}
-
-class ToggleButtons2 extends StatefulWidget {
-  int _counter = 0;
-  @override
-  _ToggleButtons2State createState() => _ToggleButtons2State();
-}
-
-class _ToggleButtons2State extends State<ToggleButtons2> {
-  List<bool> isSelected = [false, false, false];
-
-  @override
-  Widget build(BuildContext context) => ToggleButtons(
-    isSelected: isSelected,
-    selectedColor: Colors.white,
-    color: Colors.black,
-    borderRadius: BorderRadius.circular(12),
-    fillColor: Colors.lightBlue.shade900,
-    children: <Widget>[
-      Icon(Icons.remove),
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12),
-        child: Text(
-          '${widget._counter}',
-          style: TextStyle(color: Colors.blue),),
-      ),
-      Icon(Icons.add),
-    ],
-    onPressed: (int newIndex) {
-      setState(() {
-        for (int index = 0; index < isSelected.length; index++) {
-          if (index != 1) {
-            if (index == newIndex) {
-              isSelected[index] = !isSelected[index];
-              if (index == 0) {
-                if (widget._counter > 0)
-                  widget._counter--;
-              }
-              if (index == 2) {
-                if (widget._counter < 100)
-                  widget._counter++;
-              }
-            } else {
-              isSelected[index] = false;
-            }
-          } else {
-            isSelected[index] = false;
-          }
-        }
-      });
-    },
-  );
 }
 
 

@@ -25,7 +25,6 @@ class _EnergieProduiteState extends State<EnergieProduite> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 5),
             Center(
               child: Text("Energie produite", style: TextStyle(color: Colors.black,)),
             ),

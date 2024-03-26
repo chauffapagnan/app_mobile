@@ -33,16 +33,19 @@ class _EtatChauffageState extends State<EtatChauffage> {
       ),
       child: SizedBox(
         width: double.infinity,
-        height: 110,
+        height: 130,
         child: Stack(
           children: [
             Positioned(
-              top: 12.h,
-              left: 270,
+              top: -40.h,
+              left: 170,
               child: SizedBox(
-                width: 150,
-                height: 10,
+                width: 300,
+                height: 150,
                 child: Center(
+                    child:Transform.scale(
+                      scaleX: 1.3,
+                      scaleY:1.3,
                   child: Switch(
                     // This bool value toggles the switch.
                     value: etat_btn,
@@ -56,11 +59,11 @@ class _EtatChauffageState extends State<EtatChauffage> {
                         createAlbum("${etat_btn}").toString();
                         if (kDebugMode) {
                           print("ETAT : ${etat_btn}");
-                          print(createAlbum("${etat_btn}").toString());
                         }
                       });
                     },
                   ),
+                  )
                 )
               ),
             ),

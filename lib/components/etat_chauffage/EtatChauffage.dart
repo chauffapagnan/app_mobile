@@ -53,6 +53,7 @@ class _EtatChauffageState extends State<EtatChauffage> {
                       // This is called when the user toggles the switch.
                       setState(() {
                         etat_btn = !etat_btn;
+                        createAlbum("${etat_btn}").toString();
                         if (kDebugMode) {
                           print("ETAT : ${etat_btn}");
                           print(createAlbum("${etat_btn}").toString());

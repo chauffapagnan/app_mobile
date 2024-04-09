@@ -42,6 +42,7 @@ dependencies:
   dots_indicator:
   intl:
   http: ^1.2.0
+  flutter_bloc: ^8.1.5
 
 
   mqtt_client: ^10.2.0

@@ -11,8 +11,11 @@ import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:chauffagecanette/components/mqtt/MQTTClientWrapper.dart';
 import 'components/energie_produite/Graph.dart';
+import 'mqtt/mqtt_client_wrapper.dart';
 
-void main() {
+Future<void> main() async {
+  initMqtt();
+
   runApp(const MyApp());
 }
 
@@ -53,12 +56,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-  @override
-  initState() {
-    super.initState();
-    init();
-  }
 
   @override
   Widget build(BuildContext context) {

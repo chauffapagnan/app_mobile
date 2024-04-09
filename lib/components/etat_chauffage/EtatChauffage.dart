@@ -44,27 +44,44 @@ class _EtatChauffageState extends State<EtatChauffage> {
                   )
               ),
             ),
-            Transform.scale(
-              scaleX: 1.3,
-              scaleY:1.3,
-              child: Switch(
-                // This bool value toggles the switch.
-                value: etat_btn,
-                activeColor: Colors.blue,
-                inactiveTrackColor: Colors.grey.shade400,
-                inactiveThumbColor: Colors.white,
-                onChanged: (bool value) {
-                  // This is called when the user toggles the switch.
-                  setState(() {
-                    etat_btn = !etat_btn;
-                    createAlbum("${etat_btn}").toString();
-                    if (kDebugMode) {
-                      print("ETAT : ${etat_btn}");
-                    }
-                  });
-                },
-              ),
-            )
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Transform.scale(
+                    scaleX: 0.8,
+                    scaleY:0.8,
+                    child: CircularProgressIndicator(
+                      valueColor:
+                        AlwaysStoppedAnimation<Color>(Color.fromRGBO(135, 206, 235,1)),
+                    ),
+                  ),
+                ),
+                Transform.scale(
+                  scaleX: 1.3,
+                  scaleY:1.3,
+                  child: Switch(
+                    // This bool value toggles the switch.
+                    value: etat_btn,
+                    activeColor: Colors.blue,
+                    inactiveTrackColor: Colors.grey.shade400,
+                    inactiveThumbColor: Colors.white,
+                    onChanged: (bool value) {
+                      // This is called when the user toggles the switch.
+                      setState(() {
+                        etat_btn = !etat_btn;
+                        createAlbum("${etat_btn}").toString();
+                        if (kDebugMode) {
+                          print("ETAT : ${etat_btn}");
+                        }
+                      });
+                    },
+                  ),
+                )
+
+              ],
+            ),
           ],
         )
       ),

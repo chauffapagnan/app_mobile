@@ -2,10 +2,14 @@ import 'package:chauffagecanette/components/energie_produite/EnergieProduite.dar
 import 'package:chauffagecanette/components/etat_chauffage/EtatChauffage.dart';
 import 'package:chauffagecanette/components/RoutineOuverture.dart';
 import 'package:chauffagecanette/components/temp_chauffage/TempChauffage.dart';
+import 'package:chauffagecanette/components/mqtt/MQTTClientWrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fl_chart/fl_chart.dart';
-
+import 'dart:io';
+import 'package:mqtt_client/mqtt_client.dart';
+import 'package:mqtt_client/mqtt_server_client.dart';
+import 'package:chauffagecanette/components/mqtt/MQTTClientWrapper.dart';
 import 'components/energie_produite/Graph.dart';
 void main() {
   runApp(const MyApp());

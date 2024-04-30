@@ -65,8 +65,7 @@ class OnOffBloc extends Bloc<OnOffEvent, OnOffState> {
         try {
           // pushTopic
           debugPrint('VALEUR ON OFF = ${event.value}');
-          publishMessage("${event.value}");
-          publishMessage("${event.value}");
+          publishMessage("${event.value == true ? 1 : 0}");
         } catch (e) {
           emit1(const OnOffsErrorState(
               message: "Une erreur est survenu lors du switch"

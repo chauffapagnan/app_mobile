@@ -1,4 +1,4 @@
-const mobileTopicSender = "ONOFF/1";
+const mobileTopicSender = "CONTROL/ONOFF";
 const mobileTopicReceiver = "ACK/1";
 
 const mobileTempSender = "CONTROL/TEMP";

@@ -8,8 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'components/energie_produite/Graph.dart';
+import 'mqtt/mqtt_connect.dart';
 
 Future<void> main() async {
+  await MQTTConnect.prepareMqttClient();
   runApp(const MyApp());
 }
 

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:chauffagecanette/mqtt/mqtt_connect.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
@@ -13,66 +14,22 @@ import '../../../constants/config.dart';
 part 'on_off_event.dart';
 part 'on_off_state.dart';
 
-// connection states for easy identification
-enum MqttCurrentConnectionState {
-  IDLE,
-  CONNECTING,
-  CONNECTED,
-  DISCONNECTED,
-  ERROR_WHEN_CONNECTING
-}
-
-enum MqttSubscriptionState {
-  IDLE,
-  SUBSCRIBED
-}
-
 
 class OnOffBloc extends Bloc<OnOffEvent, OnOffState> {
-
-  late MqttServerClient client;
-
-  MqttCurrentConnectionState connectionState = MqttCurrentConnectionState.IDLE;
-  MqttSubscriptionState subscriptionState = MqttSubscriptionState.IDLE;
 
   OnOffBloc() : super(OnOffInitialState()) {
     on<OnOffEvent>((event, emit1) async {
 
-      // waiting for the connection, if an error occurs, debugPrint it and disconnect
-      Future<void> connectClient() async {
-        try {
-          debugPrint('client connecting....');
-          connectionState = MqttCurrentConnectionState.CONNECTING;
-          await client.connect(mqttUsername, mqttPassword);
-        } on Exception catch (e) {
-          debugPrint('client exception - $e');
-          connectionState = MqttCurrentConnectionState.ERROR_WHEN_CONNECTING;
-          client.disconnect();
-        }
-
-        // when connected, debugPrint a confirmation, else debugPrint an error
-        if (client.connectionStatus?.state == MqttConnectionState.connected) {
-          connectionState = MqttCurrentConnectionState.CONNECTED;
-          debugPrint('client connected');
-        } else {
-          debugPrint(
-              'ERROR client connection failed - disconnecting, status is ${client.connectionStatus}');
-          connectionState = MqttCurrentConnectionState.ERROR_WHEN_CONNECTING;
-          client.disconnect();
-        }
-      }
-
-
       void subscribeToTopic(String topicName) {
         debugPrint('Subscribing to the $topicName topic');
-        client.subscribe(topicName, MqttQos.atMostOnce);
+        MQTTConnect.client.subscribe(topicName, MqttQos.atMostOnce);
 
         // debugPrint the message when it is received
-        client.updates?.listen((List<MqttReceivedMessage<MqttMessage>> c) {
+        MQTTConnect.client.updates?.listen((List<MqttReceivedMessage<MqttMessage>> c) {
           final recMess = c[0].payload as MqttPublishMessage;
           var message = MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
 
-          debugPrint('YOU GOT A NEW MESSAGE:');
+          debugPrint('YOU GOT A NEW ONOFF :');
           emit(OnOffsSuccesState(onOff: message == "true" ? true : false ));
           debugPrint(message);
         });
@@ -81,44 +38,16 @@ class OnOffBloc extends Bloc<OnOffEvent, OnOffState> {
 
 
       void publishMessage(String message) {
-        final MqttClientPayloadBuilder builder = MqttClientPayloadBuilder();
-        builder.addString(message);
-
-        debugPrint('Publishing message "$message" to topic $mobileTopicSender');
-        client.publishMessage(mobileTopicSender, MqttQos.exactlyOnce, builder.payload!);
+        MQTTConnect.publishMessage(message, mobileTopicSender);
       }
 
       // callbacks for different events
       void onSubscribed(String topic) {
-        debugPrint('Subscription confirmed for topic $topic');
-        subscriptionState = MqttSubscriptionState.SUBSCRIBED;
-      }
-
-      void onDisconnected() {
-        debugPrint('OnDisconnected client callback - Client disconnection');
-        connectionState = MqttCurrentConnectionState.DISCONNECTED;
-      }
-
-      void onConnected() {
-        connectionState = MqttCurrentConnectionState.CONNECTED;
-        debugPrint('OnConnected client callback - Client connection was sucessful');
-      }
-
-      void setupMqttClient() {
-        client = MqttServerClient.withPort(mqttServerURL, mqttName, mqttServerPort);
-        // the next 2 lines are necessary to connect with tls, which is used by HiveMQ Cloud
-        client.secure = true;
-        client.securityContext = SecurityContext.defaultContext;
-        client.keepAlivePeriod = 20;
-        client.onDisconnected = onDisconnected;
-        client.onConnected = onConnected;
-        client.onSubscribed = onSubscribed;
+        MQTTConnect.onSubscribed(topic);
       }
 
 
       void prepareMqttClient() async {
-        setupMqttClient();
-        await connectClient();
         subscribeToTopic(mobileTopicReceiver);
 
       }
@@ -134,7 +63,7 @@ class OnOffBloc extends Bloc<OnOffEvent, OnOffState> {
           // pushTopic
           debugPrint('VALEUR ON OFF = ${event.value}');
           publishMessage("${event.value}");
-          emit1(OnOffsSuccesState(onOff: event.value));// on click of the switch button
+          publishMessage("${event.value}");
         } catch (e) {
           emit1(const OnOffsErrorState(
               message: "Une erreur est survenu lors du switch"

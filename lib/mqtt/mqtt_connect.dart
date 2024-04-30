@@ -64,7 +64,7 @@ class MQTTConnect{
     builder.addString(message);
 
     debugPrint('Publishing message "$message" to topic $topic');
-    client.publishMessage(mobileTopicSender, MqttQos.exactlyOnce, builder.payload!);
+    client.publishMessage(topic, MqttQos.exactlyOnce, builder.payload!);
   }
 
   // callbacks for different events

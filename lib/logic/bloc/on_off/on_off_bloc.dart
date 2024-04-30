@@ -32,7 +32,7 @@ class OnOffBloc extends Bloc<OnOffEvent, OnOffState> {
                 recMess.payload.message);
 
             debugPrint('YOU GOT A NEW ONOFF :');
-            emit(OnOffsSuccesState(onOff: message == "true" ? true : false));
+            emit(OnOffsSuccesState(onOff: message == "1" ? true : false));
             debugPrint(message);
           }
         });

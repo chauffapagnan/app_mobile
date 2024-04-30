@@ -1,8 +1,8 @@
 const mobileTopicSender = "CONTROL/ONOFF";
-const mobileTopicReceiver = "ACK/1";
+const mobileTopicReceiver = "CONTROL/ACK";
 
 const mobileTempSender = "CONTROL/TEMP";
-const mobileTempReceiver = "ACK/2";
+const mobileTempReceiver = "DATA/TEMP-TARGET";
 
 const mqttServerURL= "3f68ce49b7714ea2ac988e755d35fd99.s1.eu.hivemq.cloud";
 const mqttServerPort= 8883;

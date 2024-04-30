@@ -1,6 +1,6 @@
 import 'package:chauffagecanette/components/energie_produite/EnergieProduite.dart';
 import 'package:chauffagecanette/components/etat_chauffage/EtatChauffage.dart';
-import 'package:chauffagecanette/components/temp_chauffage/TempChauffage.dart';
+import 'package:chauffagecanette/components/def_temp_chauffage/TempChauffage.dart';
 import 'package:chauffagecanette/logic/bloc/on_off/on_off_bloc.dart';
 import 'package:chauffagecanette/logic/bloc/temp/temp_bloc.dart';
 import 'package:flutter/material.dart';

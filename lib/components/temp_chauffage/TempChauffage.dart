@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'package:chauffagecanette/logic/bloc/temp/temp_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,6 +16,16 @@ class TempChauffage extends StatefulWidget {
 
 class _TempChauffageState extends State<TempChauffage> {
   bool etat_btn = false;
+  ToggleButtons2 button=ToggleButtons2();
+  double opaqueLoading = 0.0;
+
+
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<TempBloc>(context).add(OpenAppTempEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,7 +56,16 @@ class _TempChauffageState extends State<TempChauffage> {
                     fontWeight: FontWeight.w700
                 )
             ),const SizedBox(height: 10,),
-           Wrap(
+            BlocBuilder<TempBloc, TempState>(
+              builder: (context, state) {
+              if (state is TempsErrorState) {
+    //
+              } if (state is TempsSuccesState) {
+                button.counter = state.temp;
+                debugPrint("${state.temp}");
+                opaqueLoading = 0.0;
+              }
+              return Wrap(
               crossAxisAlignment: WrapCrossAlignment.center,
               spacing: 5,
               children: [
@@ -53,12 +74,14 @@ class _TempChauffageState extends State<TempChauffage> {
                       color: Colors.black,
                     )
                 ),
-                ToggleButtons2(),
+                button,
                 ElevatedButton(
                     onPressed: () {
-                      if (kDebugMode) {
-                        print("APPUI sur OK");
-                      }
+
+                        opaqueLoading = 1.0;
+                        BlocProvider.of<TempBloc>(context)
+                            .add(TempButtonClick(id: "22", value: button.counter));
+
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
@@ -73,76 +96,87 @@ class _TempChauffageState extends State<TempChauffage> {
                           color: Colors.white,
                           fontWeight: FontWeight.bold),
                     )
-                )
+                ),Padding(
+                  padding: const EdgeInsets.all(0),
+                  child: Transform.scale(
+                    scaleX: 0.8,
+                    scaleY:0.8,
+                    child: CircularProgressIndicator(
+                      valueColor:
+                      AlwaysStoppedAnimation<Color>(Color.fromRGBO(135, 206, 235, opaqueLoading)),
+                    ),
+                  ),
+                ),
               ],
-            ),
+            );})
           ],
         ),
       ),
     );
   }
-  Future<http.Response> createAlbum(String temp) {
-    return http.post(
-      Uri.parse('https://controleur-api.vercel.app/temp_chauffage/$temp'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-      }),
-    );
-  }
+
 }
 
-class ToggleButtons2 extends StatefulWidget {
-  int _counter = 0;
-  @override
-  _ToggleButtons2State createState() => _ToggleButtons2State();
-}
+class ToggleButtons2 extends StatelessWidget {
 
-class _ToggleButtons2State extends State<ToggleButtons2> {
-  List<bool> isSelected = [false, false, false];
+  double counter;
+  late List<bool> isSelected;
+
+  ToggleButtons2({
+    this.counter = 0,
+  });
 
   @override
-  Widget build(BuildContext context) => ToggleButtons(
-    isSelected: isSelected,
-    selectedColor: Colors.white,
-    color: Colors.black,
-    borderRadius: BorderRadius.circular(12),
-    fillColor: Colors.lightBlue.shade900,
-    children: <Widget>[
-      const Icon(Icons.remove),
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
-        child: Text(
-          '${widget._counter}',
-          style: TextStyle(color: Colors.blue),),
-      ),
-      Icon(Icons.add),
-    ],
-    onPressed: (int newIndex) {
-      setState(() {
-        for (int index = 0; index < isSelected.length; index++) {
-          if (index != 1) {
-            if (index == newIndex) {
-              isSelected[index] = !isSelected[index];
-              if (index == 0) {
-                if (widget._counter > 0)
-                  widget._counter--;
-              }
-              if (index == 2) {
-                if (widget._counter < 100)
-                  widget._counter++;
-              }
-            } else {
-              isSelected[index] = false;
-            }
-          } else {
-            isSelected[index] = false;
+  Widget build(BuildContext context) {
+    this.isSelected = [false, false, false];
+    return BlocBuilder<TempBloc, TempState>(
+        builder: (context, state) {
+          if (state is TempsErrorState) {
+            //
           }
-        }
-      });
-    },
-  );
+          return ToggleButtons(
+            isSelected: isSelected,
+            selectedColor: Colors.white,
+            color: Colors.black,
+            borderRadius: BorderRadius.circular(12),
+            fillColor: Colors.lightBlue.shade900,
+            children: <Widget>[
+              const Icon(Icons.remove),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                child: Text(
+                  '${counter}',
+                  style: TextStyle(color: Colors.blue),),
+              ),
+              Icon(Icons.add),
+            ],
+            onPressed: (int newIndex) {
+              for (int index = 0; index < isSelected.length; index++) {
+                if (index != 1) {
+                  if (index == newIndex) {
+                    isSelected[index] = !isSelected[index];
+                    if (index == 0) {
+                      if (counter > 0)
+                        counter--;
+                    }
+                    if (index == 2) {
+                      if (counter < 100)
+                        counter++;
+                    }
+                  } else {
+                    isSelected[index] = false;
+                  }
+                } else {
+                  isSelected[index] = false;
+                }
+              }
+              BlocProvider.of<TempBloc>(context)
+                  .add(TempChangeValueEvent());
+
+            },
+          );
+        });
+  }
 }
 
 

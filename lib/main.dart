@@ -2,6 +2,7 @@ import 'package:chauffagecanette/components/energie_produite/EnergieProduite.dar
 import 'package:chauffagecanette/components/etat_chauffage/EtatChauffage.dart';
 import 'package:chauffagecanette/components/temp_chauffage/TempChauffage.dart';
 import 'package:chauffagecanette/logic/bloc/on_off/on_off_bloc.dart';
+import 'package:chauffagecanette/logic/bloc/temp/temp_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -59,6 +60,9 @@ class _MyHomePageState extends State<MyHomePage> {
           create: (context) => OnOffBloc(),
           )
         ,
+          BlocProvider<TempBloc>(
+            create: (context) => TempBloc(),
+          )
       ],
       child: Scaffold(
           backgroundColor: Colors.blue,

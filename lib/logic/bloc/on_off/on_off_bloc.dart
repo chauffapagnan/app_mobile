@@ -26,12 +26,15 @@ class OnOffBloc extends Bloc<OnOffEvent, OnOffState> {
 
         // debugPrint the message when it is received
         MQTTConnect.client.updates?.listen((List<MqttReceivedMessage<MqttMessage>> c) {
-          final recMess = c[0].payload as MqttPublishMessage;
-          var message = MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
+          if(c[0].topic==mobileTopicReceiver) {
+            final recMess = c[0].payload as MqttPublishMessage;
+            var message = MqttPublishPayload.bytesToStringAsString(
+                recMess.payload.message);
 
-          debugPrint('YOU GOT A NEW ONOFF :');
-          emit(OnOffsSuccesState(onOff: message == "true" ? true : false ));
-          debugPrint(message);
+            debugPrint('YOU GOT A NEW ONOFF :');
+            emit(OnOffsSuccesState(onOff: message == "true" ? true : false));
+            debugPrint(message);
+          }
         });
 
       }

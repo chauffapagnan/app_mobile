@@ -59,6 +59,7 @@ class _TempChauffageState extends State<TempChauffage> {
                       if (kDebugMode) {
                         print("APPUI sur OK");
                       }
+                      createAlbum()
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,

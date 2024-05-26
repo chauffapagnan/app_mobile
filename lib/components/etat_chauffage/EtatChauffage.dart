@@ -49,6 +49,7 @@ class _EtatChauffageState extends State<EtatChauffage> {
               child: Text(
                   "Etat du chauffage",
                   style: TextStyle(
+                    fontSize:20,
                       color: Colors.black,
                       fontWeight: FontWeight.bold
                   )
@@ -66,7 +67,7 @@ class _EtatChauffageState extends State<EtatChauffage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(12.0),
                       child: Transform.scale(
                         scaleX: 0.8,
                         scaleY:0.8,

@@ -32,7 +32,7 @@ class InExtTemperature extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         height: 70,
-        child: Row(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
           BlocBuilder<OnOffBloc, OnOffState>(

@@ -49,13 +49,16 @@ class _TempChauffageState extends State<TempChauffage> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-                "Réglage de la temperature",
+            const Padding(
+              padding: EdgeInsets.only(left:10,top:5),
+                child:Text(
+                "Réglage de la température",
                 style: TextStyle(
+                    fontSize:20,
                     color: Colors.black,
                     fontWeight: FontWeight.w700
                 )
-            ),const SizedBox(height: 10,),
+            )),const SizedBox(height: 5,),
             BlocBuilder<TempBloc, TempState>(
               builder: (context, state) {
               if (state is TempsErrorState) {
@@ -69,11 +72,13 @@ class _TempChauffageState extends State<TempChauffage> {
               crossAxisAlignment: WrapCrossAlignment.center,
               spacing: 5,
               children: [
-                const Text("Température :",
+                const Padding(
+              padding: EdgeInsets.only(left:10),
+                child:Text("Température :",
                     style: TextStyle(
                       color: Colors.black,
                     )
-                ),
+                )),
                 button,
                 ElevatedButton(
                     onPressed: () {
@@ -122,9 +127,7 @@ class ToggleButtons2 extends StatelessWidget {
   double counter;
   late List<bool> isSelected;
 
-  ToggleButtons2({
-    this.counter = 0,
-  });
+  ToggleButtons2({this.counter = 0});
 
   @override
   Widget build(BuildContext context) {

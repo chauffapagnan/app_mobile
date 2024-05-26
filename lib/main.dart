@@ -1,12 +1,14 @@
 import 'package:chauffagecanette/components/energie_produite/EnergieProduite.dart';
 import 'package:chauffagecanette/components/etat_chauffage/EtatChauffage.dart';
 import 'package:chauffagecanette/components/def_temp_chauffage/TempChauffage.dart';
+import 'package:chauffagecanette/components/in_ext_temp/InExtTemperature.dart';
 import 'package:chauffagecanette/logic/bloc/on_off/on_off_bloc.dart';
 import 'package:chauffagecanette/logic/bloc/temp/temp_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'components/def_sched_chauffage/SchedChauffage.dart';
 import 'components/energie_produite/Graph.dart';
 import 'mqtt/mqtt_connect.dart';
 
@@ -58,13 +60,14 @@ class _MyHomePageState extends State<MyHomePage> {
     BarChartSample3.setDatasSem([16.0,11.0,5.0,14.0,12.0,15.0,14.0]);
     return MultiBlocProvider(
         providers: [
+
           BlocProvider<OnOffBloc>(
           create: (context) => OnOffBloc(),
           )
         ,
           BlocProvider<TempBloc>(
             create: (context) => TempBloc(),
-          )
+          ),
       ],
       child: Scaffold(
           backgroundColor: Colors.blue,
@@ -79,8 +82,10 @@ class _MyHomePageState extends State<MyHomePage> {
               SliverList(
                 delegate: SliverChildListDelegate([
                   SizedBox(height: 5.h),
+                  //PaddingListCard(InExtTemperature()),
                   PaddingListCard(EtatChauffage()),
                   PaddingListCard(TempChauffage()),
+                  PaddingListCard(SchedChauffage()),
                   PaddingListCard(EnergieProduite()),
                   //PaddingListCard(BarChartSample3())
                 ]),)

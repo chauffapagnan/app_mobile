@@ -15,15 +15,15 @@ part 'temp_state.dart';
 
 class TempBloc extends Bloc<TempEvent, TempState> {
 
-
   TempBloc() : super(TempInitialState()) {
     on<TempEvent>((event, emit1) async {
 
 
       void subscribeToTopic(String topicName) {
+        MQTTConnect.ensureInitialized();
         debugPrint('Subscribing to the $topicName topic');
         MQTTConnect.client.subscribe(topicName, MqttQos.atMostOnce);
-
+        MQTTConnect.initializeTEMP();
         // debugPrint the message when it is received
         MQTTConnect.client.updates?.listen((List<MqttReceivedMessage<MqttMessage>> c) {
           if(c[0].topic==mobileTempReceiver) {

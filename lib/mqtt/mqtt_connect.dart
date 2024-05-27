@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:chauffagecanette/logic/bloc/on_off/on_off_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 
 import '../../../constants/config.dart';
+import '../logic/bloc/temp/temp_bloc.dart';
 
 enum MqttCurrentConnectionState {
   IDLE,
@@ -25,12 +27,15 @@ class MQTTConnect {
   static MqttCurrentConnectionState connectionState = MqttCurrentConnectionState.IDLE;
   static MqttSubscriptionState subscriptionState = MqttSubscriptionState.IDLE;
   static Completer<void> _initializationCompleter = Completer<void>();
-
+  static Completer<void> _initializationCompleterONOFF = Completer<void>();
+  static Completer<void> _initializationCompleterTEMP = Completer<void>();
+  static bool connected=false;
   static Future<void> connectClient() async {
     try {
       debugPrint('client connecting....');
       connectionState = MqttCurrentConnectionState.CONNECTING;
       await client.connect(mqttUsername, mqttPassword);
+      debugPrint("4");
     } on Exception catch (e) {
       debugPrint('client exception - $e');
       connectionState = MqttCurrentConnectionState.ERROR_WHEN_CONNECTING;
@@ -39,6 +44,9 @@ class MQTTConnect {
 
     if (client.connectionStatus?.state == MqttConnectionState.connected) {
       connectionState = MqttCurrentConnectionState.CONNECTED;
+      if (!_initializationCompleter.isCompleted) {
+        _initializationCompleter.complete();
+      }
       debugPrint('client connected');
     } else {
       debugPrint(
@@ -46,10 +54,8 @@ class MQTTConnect {
       connectionState = MqttCurrentConnectionState.ERROR_WHEN_CONNECTING;
       client.disconnect();
     }
+    connected=true;
 
-    if (!_initializationCompleter.isCompleted) {
-      _initializationCompleter.complete();
-    }
   }
 
   static Future<void> publishMessage(String message, String topic) async {
@@ -90,7 +96,31 @@ class MQTTConnect {
     return "OK";
   }
 
-  static Future<void> ensureInitialized() async {
-    await _initializationCompleter.future;
+  static Future<void> initializeONOFF() async {
+    if (!_initializationCompleterONOFF.isCompleted) {
+      _initializationCompleterONOFF.complete();
+    }
+  }
+  static Future<void> initializeTEMP() async {
+    if (!_initializationCompleterTEMP.isCompleted) {
+      _initializationCompleterTEMP.complete();
+    }
+  }
+  static Future<void> ensureInitialized({Duration timeout = const Duration(seconds: 40)}) async {
+    await _initializationCompleter.future.timeout(timeout, onTimeout: () {
+      if (!_initializationCompleter.isCompleted) {
+        _initializationCompleter.completeError(TimeoutException("Initialization timed out"));
+      }
+    });
+    /*await _initializationCompleterONOFF.future.timeout(timeout, onTimeout: () {
+      if (!_initializationCompleterONOFF.isCompleted) {
+        _initializationCompleterONOFF.completeError(TimeoutException("Initialization timed out"));
+      }
+    });
+    await _initializationCompleterTEMP.future.timeout(timeout, onTimeout: () {
+      if (!_initializationCompleterTEMP.isCompleted) {
+        _initializationCompleterTEMP.completeError(TimeoutException("Initialization timed out"));
+      }
+    });*/
   }
 }

@@ -28,6 +28,10 @@ class _SchedChauffageState extends State<SchedChauffage> {
 
   @override
   Widget build(BuildContext context) {
+    ToggleButtons2 hour1=ToggleButtons2(key: hour1Key, max: 24,counter:8);
+    ToggleButtons2 minute1=ToggleButtons2(key: minute1Key, max: 60,counter:30);
+    ToggleButtons2 hour2=ToggleButtons2(key: hour2Key, max: 24,counter:19);
+    ToggleButtons2 minute2=ToggleButtons2(key: minute2Key, max: 60,counter:20);
     return Container(
       margin: EdgeInsets.only(top: 30.h),
       padding: const EdgeInsets.all(5),
@@ -67,22 +71,22 @@ class _SchedChauffageState extends State<SchedChauffage> {
                     crossAxisAlignment: WrapCrossAlignment.center,
                     spacing: 5,
                     children: [
-                      ToggleButtons2(key: hour1Key, max: 24),
+                      ToggleButtons2(key: hour1Key, max: 24,counter:8),
                       const Text(
                           ':',
                           style: TextStyle(fontSize: 30, color: Colors.blue)
                       ),
-                      ToggleButtons2(key: minute1Key, max: 60),
+                      ToggleButtons2(key: minute1Key, max: 60,counter:30),
                       const Text(
                           '-',
                           style: TextStyle(fontSize: 30, color: Colors.blue)
                       ),
-                      ToggleButtons2(key: hour2Key, max: 24),
+                      ToggleButtons2(key: hour2Key, max: 24,counter:19),
                       const Text(
                           ':',
                           style: TextStyle(fontSize: 30, color: Colors.blue)
                       ),
-                      ToggleButtons2(key: minute2Key, max: 60),
+                      ToggleButtons2(key: minute2Key, max: 60,counter:20),
                     ],
                   ),
                   const SizedBox(height: 10), // Adding space between wraps
@@ -150,16 +154,23 @@ class _SchedChauffageState extends State<SchedChauffage> {
       body: jsonEncode(<String, String>{}),
     );
   }
+  void initCreneau(List<int> creneaux) {
+    hour1Key.currentState?.counter=4;
+    minute1Key.currentState?.counter=4;
+    hour2Key.currentState?.counter=4;
+    minute2Key.currentState?.counter=4;
+  }
 }
 
 
 
 class ToggleButtons2 extends StatefulWidget {
   final int max;
-
+  int counter;
   ToggleButtons2({
     Key? key,
     this.max = 23,
+    this.counter = 0,
   }) : super(key: key);
 
 
@@ -174,13 +185,12 @@ class _ToggleButtons2State extends State<ToggleButtons2> {
   @override
   void initState() {
     super.initState();
-    counter = 0;
     isSelected = [false, false, false];
   }
 
   // Ajouter cette méthode
   int getCounter() {
-    return counter;
+    return widget.counter;
   }
 
   @override
@@ -193,8 +203,8 @@ class _ToggleButtons2State extends State<ToggleButtons2> {
           isSelected: isSelected[2],
           onPressed: () {
             setState(() {
-              int incr = (widget.max == 24 ? 1 : 10);
-              if (counter + incr < widget.max) counter = counter + incr;
+              int incr = (widget.max == 24 ? 1 : 1);
+              if (widget.counter + incr < widget.max) widget.counter = widget.counter + incr;
               isSelected[2] = !isSelected[2];
               isSelected[0] = false;
             });
@@ -203,7 +213,7 @@ class _ToggleButtons2State extends State<ToggleButtons2> {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
           child: Text(
-            '$counter',
+            '${widget.counter}',
             style: TextStyle(fontSize: 30, color: Colors.blue),
           ),
         ),
@@ -212,8 +222,8 @@ class _ToggleButtons2State extends State<ToggleButtons2> {
           isSelected: isSelected[0],
           onPressed: () {
             setState(() {
-              int decr = (widget.max == 24 ? 1 : 10);
-              if (counter - decr > -1) counter = counter - decr;
+              int decr = (widget.max == 24 ? 1 : 1);
+              if (widget.counter - decr > -1) widget.counter = widget.counter - decr;
               isSelected[0] = !isSelected[0];
               isSelected[2] = false;
             });

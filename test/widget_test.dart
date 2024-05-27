@@ -1,19 +1,29 @@
-import 'package:chauffagecanette/main.dart';
+
+import 'package:chauffagecanette/components/def_temp_chauffage/TempChauffage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:chauffagecanette/main.dart';
 import 'package:chauffagecanette/mqtt/mqtt_connect.dart';
-
+Future<void> _initializeData() async {
+  await MQTTConnect.prepareMqttClient();
+}
 void main() {
+
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    await tester.pumpWidget(const MyApp());
+    print('Début du test');
 
-    // Attendre que l'initialisation MQTT soit terminée
-    await MQTTConnect.ensureInitialized();
+    // Appeler la fonction pour préparer le client MQTT
 
-    // Attendre que tout soit rendu
+
+    // Pump the widget tree with MyApp
+    await tester.pumpWidget( ToggleButtons2());
+
+    print('Widget MyApp pompé');
+
+    // Wait for everything to settle.
     await tester.pumpAndSettle();
 
-    // Vérifiez que notre compteur commence à 0.0.
+    // Verify that our counter starts at 0.0.
     expect(find.text('0.0'), findsOneWidget);
     expect(find.text('1'), findsNothing);
 
@@ -21,8 +31,12 @@ void main() {
     await tester.tap(find.byIcon(Icons.add));
     await tester.pumpAndSettle();
 
-    // Vérifiez que notre compteur a été incrémenté.
+    print('Incrémentation effectuée');
+
+    // Verify that our counter has been incremented.
     expect(find.text('0.0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
+
+    print('Fin du test');
   });
 }

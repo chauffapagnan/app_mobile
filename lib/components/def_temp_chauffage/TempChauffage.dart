@@ -127,7 +127,7 @@ class ToggleButtons2 extends StatelessWidget {
   double counter;
   late List<bool> isSelected;
 
-  ToggleButtons2({this.counter = 0});
+  ToggleButtons2({this.counter = 19});
 
   @override
   Widget build(BuildContext context) {

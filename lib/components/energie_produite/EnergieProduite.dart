@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 import 'Graph.dart';
 class EnergieProduite extends StatefulWidget {
@@ -19,7 +20,7 @@ class _EnergieProduiteState extends State<EnergieProduite> {
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(10))
       ),
-      child: const SizedBox(
+      child:  SizedBox(
         width: double.infinity,
         height: 270,
         child: Column(
@@ -28,7 +29,7 @@ class _EnergieProduiteState extends State<EnergieProduite> {
             Center(
               child: Padding(
         padding: EdgeInsets.only(top:15),
-          child:Text("Energie produite", style: TextStyle(
+          child:Text("Prédiction", style: TextStyle(
             fontSize:20,
             color: Colors.black,
             fontWeight: FontWeight.w700
@@ -36,7 +37,8 @@ class _EnergieProduiteState extends State<EnergieProduite> {
             ),
             SizedBox(height: 20),
             Padding(padding: EdgeInsets.symmetric(horizontal: 12),
-            child: Text("Visualiser l'énergie produite de la semaine et la prédiction du jour", style: TextStyle(color: Colors.black,)),),
+            child: Text("Visualiser la prédiction de l'énergie produite en Watt, de la semaine",
+                style: TextStyle(color: Colors.black,)),),
             SizedBox(height: 20),
             Center(child : BarChartSample3(),),
 

@@ -5,7 +5,7 @@ import 'package:collection/collection.dart';
 
 class _BarChart extends StatelessWidget {
   static var datasSem = [0.0,0.0,0.0,0.0,0.0,0.0,0.0];
-  static var labelsSem = ["Mn","Te","Wd","Tu","Fr","St","Sn"];
+  static var labelsSem = ["Lu","Ma","Me","Je","Ve","Sa","Di"];
   const _BarChart();
   void setDatasSem(var tab){
     _BarChart.datasSem=tab;
@@ -20,7 +20,7 @@ class _BarChart extends StatelessWidget {
         barGroups: barGroups,
         gridData: const FlGridData(show: false),
         alignment: BarChartAlignment.spaceAround,
-        maxY: 20,
+        maxY: 50,
       ),
     );
   }
@@ -77,6 +77,7 @@ class _BarChart extends StatelessWidget {
       case 6:
         text = _BarChart.labelsSem[6];
         break;
+
       default:
         text = '';
         break;
@@ -168,6 +169,7 @@ class _BarChart extends StatelessWidget {
         )
       ],
       showingTooltipIndicators: [0],
+
     ),
     BarChartGroupData(
       x: 4,
@@ -190,6 +192,7 @@ class _BarChart extends StatelessWidget {
         )
       ],
       showingTooltipIndicators: [0],
+
     ),
     BarChartGroupData(
       x: 6,
@@ -225,7 +228,7 @@ class BarChartSample3State extends State<BarChartSample3> {
   @override
   Widget build(BuildContext context) {
     return const SizedBox(
-      width: 250,
+      width: 260,
       height: 130,
       child: _BarChart(),
       );
